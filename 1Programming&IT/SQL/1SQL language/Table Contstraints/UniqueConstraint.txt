@@ -1,0 +1,17 @@
+
+<----> UNIQUE CONSTRAINT <----->
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[UQ_ExpenseCategory_Code]') AND parent_object_id = OBJECT_ID('TBTE_ExpenseCategory'))
+BEGIN
+	DECLARE @codeBase int = 10000; 
+	
+	-- replace all category codes by unique codes
+	Update t1
+	Set Code = CAST((t2.rowNum + @codeBase) as varchar(5) )
+	FROM [TBTE_ExpenseCategory] t1
+		INNER JOIN (select ROW_NUMBER() OVER(ORDER BY Id) as rowNum, Id from [TBTE_ExpenseCategory]) t2
+		ON t1.Id = t2.Id;
+
+	-- add unique constraint
+	ALTER TABLE [TBTE_ExpenseCategory]
+	ADD CONSTRAINT UQ_ExpenseCategory_Code UNIQUE([Code])
+END

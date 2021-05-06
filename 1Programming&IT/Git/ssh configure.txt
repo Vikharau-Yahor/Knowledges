@@ -1,0 +1,22 @@
+Link: (https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+
+If you need create new ssh:
+- install git bash
+- ssh-keygen -t rsa -b 4096 -C some_mail@domain.com - generate new rsa key pair
+  ---> enter file name
+  ---> enter (or not) passphrase
+- eval $(ssh-agent -s) - start ssh-agent
+- ssh-add ~/pathToSSH - add ssh key to agent
+
+example: ( 
+	ssh-keygen -t rsa -b 4096 -C etg@test.com
+		--> git_ssh
+	eval $(ssh-agent -s)
+	ssh-add ~/git_ssh
+)
+
+SSH usage in GitHub:
+- copy content of your "sshfile.pub"
+- go to SSH Keys tab in your github acc -> add new -> fill title and paste key -> Add Key and confirm Acc password
+
+

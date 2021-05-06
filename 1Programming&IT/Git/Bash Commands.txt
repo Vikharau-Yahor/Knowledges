@@ -1,0 +1,13 @@
+********* 
+   Push
+*********
+
+git push origin <branchName> -> simple push changes of the specific local branch to origin
+git push origin <branchName> -f -> force push
+
+**********
+Cherry pick
+***********
+// <SHA> - commit id
+git cherry-pick <SHA> // transfer target commit to current branch
+git cherry-pick -n <SHA> // transfer target commit changes to uncommitted changes of current branch

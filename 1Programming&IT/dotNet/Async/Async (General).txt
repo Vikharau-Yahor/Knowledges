@@ -1,0 +1,30 @@
+стр 116
+private async void DumpWebPageAsync(string uri)
+{
+ WebClient webClient = new WebClient();
+ string page = await webClient.DownloadStringTaskAsync(uri);
+ Console.WriteLine(page);
+}
+
+1. Весь код после await переносится в отдельный метод (secondPart).
+2. Все данные которые были доступны методу временно сохраняются в памяти (в объектах контекстов)
+3. создается объект Task, куда поместится результат webClient.DownloadStringTaskAsync(uri)
+4. Текущий поток входи в webClient.DownloadStringTaskAsync и погружается дальше до тех пор пока не встретит реальную асинхронную задачу (начало скачивания)
+5. Затем поток начинает выходить из этих методов поочередно создавая и конфигурируя объекты таск (в которых прописывается СинкКонтекст(указывающий в каком потоке продолжить код после эвэйт), нужно ли использовать СинкКонтекст (ConfigureAwait))
+6. ожидаемая операция завершается + заполняется результат в Task
+7. Специальный поток (поток ввода-вывода) узнает что скачивание завершилось и возобновляет работу кода (начиная с самого глубокого).
+8. В зависимости от конфигурации таска, определенный либо любой поток из пула подхватывает выполнение второй части кода после эвейт (восстанавливая все нужные данные из контекстов) (при configureAwait(true) исполнение подхватывает поток, выполнявший код до await)
+9. 8-ой шаг повторяется для каждого куска метода после await по порядку от самого глубокого вызова ( первым будет webClient.DownloadStringTaskAsync)
+
+to do:
+- make proj with demonstration async usage
+- method with async awaiting result from other thread
+- method with async awaiting result from other thread (with exception throwing)
+- method with storing task of other thread working method, then do some oper-s then await it (test finished task before await and not finished)
+- TaskFromResult
+- debug and understand it
+
+
+
+
+

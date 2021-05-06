@@ -1,0 +1,4 @@
+wwwroot
+	- public  			// prod bundles
+	- src 				// development files (styles, react components and etc)
+	- node_modules		// node modules

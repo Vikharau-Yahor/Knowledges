@@ -1,0 +1,6 @@
+			routes.MapRoute(
+				name: "Feedback",
+				url: "error/{action}",
+				defaults: new { controller = "Feedback" },
+				namespaces: new[] { "TryggeBarnehager.TravelExpense.UI.Web.BO.Controllers" }
+			);

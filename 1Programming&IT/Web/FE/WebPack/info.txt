@@ -1,0 +1,38 @@
+***********
+Links
+**************
+1) General info about webPack: https://learn.javascript.ru/screencast/webpack#webpack-1-intro
+2) Official documentation: https://webpack.js.org/configuration/
+
+***********
+Requirements
+************
+- Installed Node.js
+
+******************
+General
+**************
+WebPack -- FE builder.
+	Opportunities:
+	- Compilation (ts, jsx, less, sass and etc)
+	- Bundling
+	- Automation
+	- Dynamic load
+
+
+***********
+Structure
+**********
+- webpack.config.js - main configuration file for webpack (must be placed in root folder)
+- loaders - various transformations for src files which are supported by webpack (loader for TS, JSX and etc)
+
+*******************
+Webpack configuration
+*********************
+
+
+***********
+Loaders
+**********
+1) babel-loader - 
+	- link: https://webpack.js.org/loaders/babel-loader/

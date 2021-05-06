@@ -1,0 +1,4 @@
+Открываем KMSAuto 
+-> выбираем Уст. GVLK 
+-> Ключ Windows 
+-> Активация Windows ('Activation Successfull' статус в логе если все замечательно)

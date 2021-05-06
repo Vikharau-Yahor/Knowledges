@@ -1,0 +1,2 @@
+Программа Rufus: https://rufus.ie/
+интерфейс интуитивно понятен (доп информация есть здесь: https://remontka.pro/rufus-3-bootable-usb/)

@@ -1,0 +1,10 @@
+//Simple events
+
+
+//Delegated events
+
+$("#tableId").delegate(".td-class", "click", function () {
+	$(this).toggleClass("chosen");
+});
+
+see more here: http://api.jquery.com/delegate/

@@ -1,0 +1,13 @@
+***************
+General
+******************
+NPM - global registry of publich packages
+
+*****************
+Commands
+******************
+- 'npm install <module_name>' - installs selected module to current directory
+	* 'node_modules' folder is created (here target module will be saved + all dependant modules)
+	* 'packages.json' is created (contains all info about isntalled modules)
+	* 'packages-lock.json' is created (????)
+- 'npm install' - restores all packages from package.json

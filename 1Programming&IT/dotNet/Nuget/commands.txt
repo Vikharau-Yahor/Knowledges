@@ -1,0 +1,3 @@
+Run commands in powershell in project/sln folder or in package manager console
+1) dotnet restore -- restore all packages (+ shows all issues with restore process)
+	* it creates ..\obj\project.assets.json

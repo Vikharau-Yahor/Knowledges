@@ -1,0 +1,5 @@
+Pay attention on UnitTest framework because
+	* if it doesn't support async model you will need to wait any async operation synchronously notes:
+		** async void Test methods are not allowed because they will return result on first awaiting so the test will be marked as succesfull (every time and in any case)
+		** wait with result wrap exceptions into AgregateException + thread will waste time on waiting
+	* if it support async model - you can write Task based TestMethods where you will be able safely await any async code

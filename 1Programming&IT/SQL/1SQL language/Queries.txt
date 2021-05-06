@@ -1,0 +1,7 @@
+<---->Alter column<---->
+ALTER TABLE [TBTE_JourneyExpense] ALTER COLUMN [ReceiptFileId] UNIQUEIDENTIFIER NULL
+
+<----> IF Clause on sys.columns <----->
+IF NOT EXISTS (SELECT * FROM sys.columns WHERE [name] = 'CompanyId' AND [object_id] = object_id('TBTE_Journey'))
+BEGIN
+END

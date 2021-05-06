@@ -1,0 +1,32 @@
+*****
+General Info
+*****
+Package link: https://nuget.org/packages/Microsoft.Tpl.Dataflow.
+
+Used for parallel sequence processing in separate blocks. It based on:
+
+ISourceBlock<T>
+ For request T object.
+ITargetBlock<T>
+ To transfer T object for processing.
+
+e.g. sequence
+
+Data sequence to:
+// These actions are executed in parallel per message from sequence
+ (ITargetBlock<T>, ISourceBlock<T2>) -> (ITargetBlock<T2>, ISourceBlock<T2>) -> (ITargetBlock<T2>, ISourceBlock<T3>)
+
+******
+Default Implementations
+******
+ActionBlock<T>
+ Конструктору объекта ActionBlock<T> передается делегат,
+который вызывается для каждого сообщения. Класс ActionBlock<T> реализует только интерфейс ITargetBlock<T>.
+TransformBlock<TIn, TOut>
+ Конструктору также передается делегат, только на этот раз он
+является функцией, возвращающей значение. Это значение
+становится сообщением, которое передается следующему блоку. Класс TransformBlock<TIn, TOut> реализует интерфейсы
+ITargetBlock<TIn> и ISourceBlock<TOut>. Это параллельная версия LINQ-метода Select.
+Библиотека Task Parallel Library Dataflow 89
+JoinBlock<T1, T2,...>
+ Объединяет несколько входных потоков в один выходной поток, состоящий из кортежей.

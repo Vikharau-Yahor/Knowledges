@@ -1,0 +1,53 @@
+*****
+SynchronizationContext
+*****
+SynchronizationContext - object which used for execution code in certain Thread. It can be associated:
+- with certain Thread (UI thread)
+- with ThreadPool (any secondary threads from Task.Run.. and other sources)
+
+// by default SyncContext stored in Task of awaited method and used to continue code in syncContext's Thread after await
+await asyncMethod() // by defaul ConfigureAwait(true)
+
+
+*****
+ConfigureAwait
+*****
+it manage wheather it's needed to use SynchronizationContext or not.
+If true - SynchronizationContext used to continue code after await in certain Thread (or any Thread from ThreadPool)
+If false - SynchronizationContext not used and code can be continued in any Thread.
+
+
+******
+Deadlock
+******
+In WPF:
+
+void onDeadClick()
+{
+....
+//Causes deadlock, because in asyncFunc code after await will requrest UI thread which will be blocked by this step
+ var result = asycnFunc().Result;
+....
+
+}
+
+void onCorrectClick()
+{
+....
+//asycnFunc() will start executing in Secondary Thread so the SyncContext will refer to ThreadPool (not to UI Thread)
+// and code after await inside the function will be continued in any Thread from the pool.
+ var result = Task.Run(()=>asycnFunc().Result).Result;
+....
+
+}
+
+async Task<String> asycnFunc()
+{
+ var a = 0;
+ a = await otherAsync();
+ return a.ToString();
+}
+
+
+
+

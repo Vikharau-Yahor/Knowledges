@@ -1,0 +1,149 @@
+Для каждого асинхронного метода создается по одному методу-пустыкшке и стейт структуре.
+
+Метод пустышка повторяет сигнатуру исходного метода, который делает следующее:
+- инициализирует стейт структуру (вбивая туда this, локлаьные переменные, даже стек если нужно)
+- стартует этот стейт (где внутри вызывает метод MoveNext)
+- возвращает таск;
+
+Стейт структура имеет имя исходного метода с угловыми скобками (e.g. <Multiply>d__2) который управляет исполнением кода между эвейтами:
+- содержит все локальные переменные, параметры и даже указатель на текущий объект в виде свойств
+- маркер возобновления исполнения части кода исходного метода -- l_state
+- метод MoveNext:
+ -- исполняет часть исходного метода (части кода разделенные await) с определенным номером, который находится в l_state;
+ -- двигает l_state дальше
+ -- когда часть кода заканчивается на await чего-либо, то получает стартует ожидаемый метода, получая awaiter, который сразу же проверяет не завершиласль ли она:
+	если да, то переходим сразу к следующей части увеличивая l_state
+	если нет, заносим taskawaiter в очередь ожидающих заверешения тасок + l_state++ (когда сигнал завершения будет получен, некоему потоку будет приказано вызвать MoveNext для этой структуры)
+ -- перехватывает и устанавливает exception или результат в task, что будет означать завершения таски и завершения работы всей этой структуры
+
+Пример:
+
+	public class Calculator
+	{
+		private int initialNumber;
+
+		public Calculator(int setupNumber)
+		{
+			initialNumber = setupNumber;
+		}
+
+		public async Task<int> Multiply(int multiplicatorNumber)
+		{
+			initialNumber = initialNumber * multiplicatorNumber;
+			await LongAction();
+			var result = 3;
+			result = initialNumber;
+			return result;
+		}
+
+		public async Task LongAction()
+		{
+			await Task.Delay(2000);
+		}
+	}
+
+
+Для каждого асинхронного метода будут созданы методы пустышки:
+- Task`1<int32> Multiply
+- Task LongAction ()
+и стэйт структуры хранящие состояние исходного метода + маркеры возобновления кода (до эвейта и после них):
+- '<Multiply>d__2'
+- '<LongAction>d__3'
+
+##############################################
+Пример будет для async Task<int> Multiply(int multiplicatorNumber)
+
+****
+Подмена метода Multiply методом заглушкой для запуска работы объекта стейт машины
+*****
+
+Task<int32> Multiply(int multiplicatorNumber)
+{
+	 var MultiplyState= new '<Multiply>d__2'();
+	 MultiplyState.4__this = this;
+	 MultiplyState.multiplicatorNumber = multiplicatorNumber;
+	 <MultiplyState.t__builder =  AsyncTaskMethodBuilder<int32>.Create();
+	 MultiplyState.1__state = -1
+	 MultiplyState.t__builder.Start<<Multiply>d__2>(ref MultiplyState);
+	 return MultiplyState.t__builder.get_Task()
+}
+
+*****
+Сгенерированная StateMachine структура
+******
+structure '<Multiply>d__2': System.Runtime.CompilerServices.IAsyncStateMachine
+{
+	 public int32 <>1__state 										// маркер исполнения кода для MoveNext
+	 public valuetype AsyncTaskMethodBuilder<int32> <>t__builder    // управляет текущей таской???
+	 public int32 multiplicatorNumber								// параметр исходного метода
+	 public class AsyncDemo.Calculator '<>4__this'					// this объект из исходного метода
+	 private int32 '<result>5__1'									// локальная переменная result
+	 private TaskAwaiter '<>u__1' 				// awaiter для внешней таски (из очередного await исходного метода), после которой MoveNext продолжит исполнения как только awaiter просигналит о завершении
+
+	 void MoveNext ()
+	 {
+	 	int num = <>1__state;
+	 	try
+	 	{
+		 	switch(num)
+		 	{
+		 		case -1: 
+		 			<>4__this.initialNumber *= multiplicatorNumber;
+		 			awaiter = <>4__this.LongAction().GetAwaiter();
+		 			if (!awaiter.IsCompleted)
+		 			{
+		 				<>1__state = 0;
+		 				<>u__1 = awaiter
+		 				<Multiply>d__2 stateMachine = this;
+		 				<>t__builder.AwaitUnsafeOnCompleted(ref awaiter, ref stateMachine);
+		 				return;
+		 			}
+		 			else
+		 			{
+		 			 go to case 0 and C0 label;
+		 			}
+
+		 		case 0:
+		 			awaiter = <>u__1;
+		 			>u__1 = default(TaskAwaiter);
+		 			num = (<>1__state = -1);
+		 		C0:	awaiter.GetResult(); // если предыдущая задача была выполнена сразу, то старт отсюда
+		 			<result>5__1 = 3;
+		 			<result>5__1 = <>4__this.initialNumber;
+		 			result = <result>5__1;
+		 	}
+	 	}
+	 	catch(Exception e)
+	 	{
+	 		<>1__state = -2;                      //-2 видимо означает конец исполнения MoveNext
+	 		<>t__builder.SetException(exception);
+	 		return;
+	 	}
+	 	<>1__state = -2;
+	 	<>t__builder.SetResult(result);
+	 	return;
+	 }
+}
+
+
+Возможные ситуации:
+WPF
+AnyOnclick
+{
+	var a = new Calculator(2);
+	var res = a.Multiply(3).Result;
+}
+
+Call stack:
+- new Calculator(2);
+- var res = a.Multiply(3)
+	- create state MultiplyState and fill in this, params and etc
+	- builder.Start(MultiplyState)
+		MultiplyState.MoveNext
+		- case -1 execution
+		- awaiter = 4__this.LongAction().GetAwaiter();
+		- builder.AwaitUnsafeOnCompleted(ref awaiter, ref stateMachine);
+		- return;
+	- return builder.GetTask();
+- a.Multiply(3).Result -- wait result
+- MultiplyState.MoveNext() // tries execute for case=0 but wait for thread (DEADLOCK)

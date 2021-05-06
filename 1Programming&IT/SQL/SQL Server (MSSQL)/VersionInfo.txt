@@ -1,0 +1,2 @@
+1) go to C:\Program Files\Microsoft SQL Server\MSSQL14.MS17MONOLITHSQL\MSSQL\Binn
+2) find sqlservr.exe and check properties

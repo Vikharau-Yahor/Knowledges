@@ -1,0 +1,33 @@
+NAct -- allows to create actors. Actors - threads which responsible for certain resources (e.g. UI actor, which responsible for the form and its components).
+
+
+//IActor is marker for an interfase which objects will be used by NAct infrastructure,
+//Methods must be async-compatible and returns: Task, void or Task<T>
+public interface IRndGenerator : IActor
+{
+ Task<int> GetNextNumber();
+}
+
+//Implementation
+class RndGenerator : IRndGenerator
+{
+ public async Task<int> GetNextNumber()
+ {
+ // Безопасная генерация случайного числа – медленная операция
+ ...
+ return num;
+ }
+}
+
+//Usage
+//this object will execute all methods in separate thread
+IRndGenerator rndActor = ActorWrapper.WrapActor(new RndGenerator());
+Task<int> nextTask = rndActor.GetNextNumber();
+foreach (var chunk in stream)
+{
+ int rndNum = await nextTask;
+ // Начать генерацию следующего числа
+ nextTask = rndActor.GetNextNumber();
+// Использовать rndNum для шифрования блока – медленная операция
+ ...
+}

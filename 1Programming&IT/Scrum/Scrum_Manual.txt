@@ -1,0 +1,4 @@
+Скрам Гайд на русском: 
+	https://www.scrumguides.org/docs/scrumguide/v2016/2016-Scrum-Guide-Russian.pdf
+Скрам Гайд на английском: 
+	https://www.scrumguides.org/docs/scrumguide/v2017/2017-Scrum-Guide-US.pdf#zoom=100

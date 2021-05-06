@@ -1,0 +1,23 @@
+**************
+Culture setup
+****************
+Attribute for test fixtures and test methods:
+[SetCulture("en-GB")]
+
+To setup culture globally, you can use SetupFixture
+
+  [SetUpFixture]
+  public class MySetUpClass
+  {
+    	[SetUp]
+	RunBeforeAnyTests()
+	{
+	  System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("EN-US");
+	}
+
+    	[TearDown]
+	RunAfterAnyTests()
+	{
+	  // ...
+	}
+  }

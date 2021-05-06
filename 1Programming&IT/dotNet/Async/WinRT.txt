@@ -1,0 +1,6 @@
+WinRT - it's API (types/methods library) which can be used outside the .net: by C++, by c# or other.
+It can't contains .net specified types and features, so if you wish to write async methods for the WinRT you will have to use 2 interfaces:
+- IAsyncAction (winMD interface) which mapped on Task
+- IAsyncOperation<T> (winMD inteface) which mapped on Task<T>
+
+You can find more info on 97 page (Alex Devis "Async programming c# 5.0")

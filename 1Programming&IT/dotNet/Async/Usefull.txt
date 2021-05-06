@@ -1,0 +1,69 @@
+***
+[Delay] -- async
+****
+await Task.Delay(100) -- async version for Sleep.
+
+****
+[WhenAll] Multiple task await
+****
+IEnumerable<Task<Image>> tasks = s_Domains.Select(GetFavicon);
+tasks = tasks.ToList(); 
+Task<Image[]> allTask = Task.WhenAll(tasks);
+Image[] images = await allTask;
+
+
+
+****
+[WhenAny] Await first completed tasks from a list 
+*****
+
+Task<Task<Image>> anyTask = Task.WhenAny(tasks);
+Task<Image> winner = await anyTask;
+Image image = await winner; // Ётот оператор всегда завершаетс€ синхронно
+AddAFavicon(image);
+
+// await remaining tasks to be sure that there were no any errors
+// or you can simply cancel remaining task
+foreach (Task<Image> eachTask in tasks)
+{
+ if (eachTask != winner)
+ {
+ await eachTask;
+ }
+}
+
+
+****
+[CancellationToken] Cancel Task
+*****
+// create canccelation token
+CancellationTokenSource cts = new CancellationTokenSource();
+cancelButton.Click += delegate { cts.Cancel(); };
+
+// transfer it to the async function
+int result = await dbCommand.ExecuteNonQueryAsync(cts.Token);
+
+// invoke cancellation if cancelButton has been clicked in async function (throw OperationCanceledException -> will set IsCanceled true for the task)
+int ExecuteNonQueryAsync(CancellationToken ct)
+{
+.....
+ ct.ThrowIfCancellationRequested();
+}
+
+****
+[IProgress<T>] Show progress of the executing Task
+*****
+
+// create progress obj wich contains logic of showing progress info during task execution (and manage type of the info)
+var progress = new Progress<int>(percentage => progressBar.Value = percentage);
+var result = await DownloadDataTaskAsync(address, progress)
+
+Task<byte[]> DownloadDataTaskAsync(Uri address, IProgress<DownloadProgressChangedEventArgs> progress)
+{
+....
+progress.Report(20); // use the same Thread as one which created the progress obj (because progress obj stores SynchronizationContext info of its Thread)
+...
+progress.Report(75);
+..
+progress.Report(100);
+}

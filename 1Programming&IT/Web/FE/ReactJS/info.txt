@@ -1,0 +1,33 @@
+************
+Links
+************
+- General info -- https://learn.javascript.ru/screencast/react#react-components
+
+*********
+Tools
+*********
+- VS code
+- WebStorm
+
+**************
+Requirements
+*************
+- Node.js [optionally]
+
+*******************
+Folders structure
+*******************
+wwwroot
+	- public  			// prod bundles
+	- src 				// development files (styles, react components and etc)
+	- node_modules		// node modules
+
+*******
+React app initialization
+*******
+1) you can use https://github.com/facebook/create-react-app to setup default environment
+	- commands:
+		-- cd <you working folder>
+		-- npx create-react-app <react-files-folder>
+		-- cd <react-files-folder>
+	- it creates default folders structure, adds lot of node modules, readme and some jsx files with index page

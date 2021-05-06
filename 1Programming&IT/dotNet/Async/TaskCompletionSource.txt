@@ -1,0 +1,65 @@
+*******
+General
+*******
+Use TaskCompletionSource if you want await actions wich ends only with certain Event or other...
+- unblock user thread while user input requires from Confirm Dialog 
+
+private Task<bool> GetUserPermission()
+{
+// Создать объект TaskCompletionSource, чтобы можно было вернуть
+ // задачу-марионетку
+TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+ // Создать диалог
+ PermissionDialog dialog = new PermissionDialog();
+// Когда пользователь закроет диалог, сделать задачу завершившейся
+ // с помощью метода SetResult
+dialog.Closed += delegate { tcs.SetResult(dialog.PermissionGranted); };
+ // Показать диалог на экране
+ dialog.Show();
+ // Вернуть еще не завершившуюся задачу-марионетку
+ return tcs.Task;
+}
+
+Usage:
+if (await GetUserPermission())
+{ ....}
+
+
+********************************
+Implement TAP-wrapper for IAsyncResult-based methods
+******************************
+IAsyncResult BeginGetHostEntry(string hostNameOrAddress,
+ AsyncCallback requestCallback,
+ object stateObject)
+
+IPHostEntry EndGetHostEntry(IAsyncResult asyncResult)
+
+=>
+
+public static Task<IPHostEntry> GetHostEntryAsync(string hostNameOrAddress)
+{
+ TaskCompletionSource<IPHostEntry> tcs =
+ new TaskCompletionSource<IPHostEntry>();
+ Dns.BeginGetHostEntry(hostNameOrAddress, asyncResult =>
+ {
+ try
+ {
+ IPHostEntry result = Dns.EndGetHostEntry(asyncResult);
+ tcs.SetResult(result);
+ }
+ catch (Exception e)
+ {
+ tcs.SetException(e);
+ }
+ }, null);
+ return tcs.Task;
+}
+
+
+*******
+General TAP-wrapper
+*******
+Task t = Task<IPHostEntry>.Factory.FromAsync<string>(Dns.BeginGetHostEntry,
+ Dns.EndGetHostEntry,
+ hostNameOrAddress,
+ null);

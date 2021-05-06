@@ -1,0 +1,4 @@
+info: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_profiles?view=powershell-7
+
+global profile (which is runned per any PS session) is here: 
+C:\Windows\System32\WindowsPowerShell\v1.0\profile.ps1 (or $PSHOME\profile.ps1)

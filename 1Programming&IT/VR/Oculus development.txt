@@ -1,0 +1,4 @@
+
+Dev creation:
+1) go to https://dashboard.oculus.com/ and create new organisation (accept all agreements)
+2) 
