@@ -1,0 +1,98 @@
+***********
+Links
+**************
+1) Official documentation: https://redux.js.org/tutorials/essentials/part-1-overview-concepts
+
+********
+General
+*********
+Redux -- a pattern and library for managing and updating application state, using events called "actions"
+Packages:
+- React-Redux - official package of Redux with React integration.
+- Redux Toolkit - contains necessary code to achieve the best practices/approach of development with Redux.
+- Redux DevTools Extension - for debug purposes
+
+*********
+Concepts
+********
+- State management - Redux allows to share some state between different components (instead of 'lifting up' part of state to Parent component)
+- Immutability - Redux perform all updates immutabily i.e. it makes copy of object and update it (instead of updating original obj)
+
+**********
+Components
+**********
+Shortly:
+- Store is shared state for several components
+- Reducers creates intial stores (+ handles all update events)
+- Actions are events which handled by reducers
+- Action creators are functions which produces actions (events)
+- Dispatch is method of store to trigger necessary action (event)
+- Selectors are methods for reading from store
+
+--------------
+Actions - plain JavaScript object that has a type field. Can be considered as event that describes something that happened in the application.
+
+Example:
+const addTodoAction = {
+  type: 'todos/todoAdded', // contains descriptive name using template "domain/eventName"
+  payload: 'Buy milk'      // additional info about event
+}
+
+------------------------------------------------------------------------------------------------
+Action Creators -- a function that creates and returns an action object
+
+Example:
+const addTodo = text => {
+  return {
+    type: 'todos/todoAdded',
+    payload: text
+  }
+}
+
+-------------------------------------
+Reducer -- a function that receives the current state and an action object, decides how to update the state if necessary
+	(i.e. it's event handler which processes certain action)
+Signature: 
+	(state, action) => newState
+Rules:
+	- must not update input state
+	- must calculate new state only using old state and action info
+	- must not use async operations, randoms or cause other "side effects"
+Example:
+	const initialState = { value: 0 }
+	function counterReducer(state = initialState, action) {
+	  // Check to see if the reducer cares about this action
+	  if (action.type === 'counter/increment') {
+	    // If so, make a copy of `state`
+	    return {
+	      ...state,
+	      // and update the copy with the new value
+	      value: state.value + 1
+	    }
+	  }
+	  // otherwise return the existing state unchanged
+	  return state
+	}
+
+------------------------------------------------
+Store -- contains application state. The store is created by passing in a reducer, and has a method called getState that returns the current state value
+Example:
+	import { configureStore } from '@reduxjs/toolkit'
+	const store = configureStore({ reducer: counterReducer })
+	console.log(store.getState())
+	// {value: 0}
+
+---------------------------------------------------------------------
+Dispatch - method of store to trigger some action in order to amend some changes in the state
+Example:
+	store.dispatch({ type: 'counter/increment' })
+	console.log(store.getState())
+	// {value: 1}
+------------------------------------------
+Selectors - functions which extract some data from store
+Example:
+	const selectCounterValue = state => state.value
+
+	const currentValue = selectCounterValue(store.getState())
+	console.log(currentValue)
+	// 2
