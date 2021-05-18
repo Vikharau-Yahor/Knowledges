@@ -11,3 +11,4 @@ Commands
 	* 'packages.json' is created (contains all info about isntalled modules)
 	* 'packages-lock.json' is created (????)
 - 'npm install' - restores all packages from package.json
+- 'npm run <command>' - executes speciffic command from package.json -> "scripts" section

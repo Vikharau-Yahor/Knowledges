@@ -1,0 +1,14 @@
+***********
+Link
+*******************
+http://codebetter.com/gregyoung/2010/02/16/cqrs-task-based-uis-event-sourcing-agh/
+
+***************
+General
+****************
+Author: Greg Young (Martin Fawler just heard about this aproach from Greg)
+
+CQRS: just simple separation for data reading and writing.
+E.g. UserService with various read and write operations can be just splitted on two service (in one - write operations, in another - only read) to
+comply with CQRS approach.
+
