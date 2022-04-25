@@ -1,0 +1,27 @@
+*********
+Links
+************
+1) unity manual - https://docs.unity3d.com/2021.1/Documentation/Manual/
+2) unity learning - https://learn.unity.com/
+3) asset store - https://assetstore.unity.com/account/assets
+	(import assets can be done view Window -> Package Manager)
+
+***********
+Termins
+************
+- Prefab - is already configured game object (group of game objects), marked as blue cube.
+	-- can be created in Assets-> prefabs folder
+	-- imported prefabs are commonly readonly frefabs (blue + white colors in icon), but you can drag and drop gameobject to the folder to make your prefab based on imported object
+
+***********
+How to 
+*************
+1) Import Asset
+	-- open unity project and open Window -> Package Manager
+	-- go to  https://assetstore.unity.com/account/assets
+	-- Find an asset and add to my assets
+	-- go to 'My assets' and then Open in Unity
+	-- Download the asset in Package manager
+	-- Import
+
+

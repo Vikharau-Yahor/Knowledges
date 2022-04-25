@@ -1,0 +1,3 @@
+Navigation
+* F (on selected obj) - make camera focus on the obj
+* Hold right button and move by WASD and QE (top and down movement); shift (move faster)

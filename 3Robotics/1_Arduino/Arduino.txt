@@ -1,0 +1,36 @@
+﻿***********
+Main
+************
+Arduino - платформа для создания электронных устройств/роботов (включает себя как железо так и софт)
+
+Основное:
+- Оф сайт - https://www.arduino.cc/
+- Документация - https://docs.arduino.cc/
+- Среда разработки - Arduino IDE 2.0
+
+*************
+Books in progress
+*************
+- Джереми Блум - "Изучаем Ардуино"
+	* Метка - Глава 2, страница 76
+
+*************
+Education
+***************
+1) youtube каналы
+2) https://lesson.iarduino.ru/
+3) https://xn--18-6kcdusowgbt1a4b.xn--p1ai/%D0%BA%D0%BD%D0%B8%D0%B3%D0%B8-%D0%BF%D0%BE-%D0%B0%D1%80%D0%B4%D1%83%D0%B8%D0%BD%D0%BE/
+
+Паук на Arduino Nano:
+- https://habr.com/ru/post/516082/
+
+Джереми Блум:
+	- https://www.exploringarduino.com/resources/ - сайт Блума с главами книг, и кодом к ним
+	- у Блума есть собственные ролики на youtube
+	- youtube.com/AmperkaRU - содержит переведенные уроки от Блума
+
+Всякое:
+1) youtube каналы
+2) https://lesson.iarduino.ru/
+3) https://xn--18-6kcdusowgbt1a4b.xn--p1ai/%D0%BA%D0%BD%D0%B8%D0%B3%D0%B8-%D0%BF%D0%BE-%D0%B0%D1%80%D0%B4%D1%83%D0%B8%D0%BD%D0%BE/
+4) https://habr.com/ru/post/516082/

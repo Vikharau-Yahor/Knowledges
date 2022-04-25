@@ -1,0 +1,6 @@
+1) Foundations: Get started with Unity
+- Welcome to Unity Essentials
+- Get the setup wizard
+- Unity Plans: What's right for me?
+- Install Unity and the hub
+- Explore the Unity Editor

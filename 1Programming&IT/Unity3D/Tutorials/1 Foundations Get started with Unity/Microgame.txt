@@ -1,0 +1,357 @@
+************
+Microgame
+**************
+Name: John Lemon's Haunted Jaunt 3D beginner
+Tutorial link: https://learn.unity.com/project/john-lemon-s-haunted-jaunt-3d-beginner
+
+***********
+Installation
+************
+Unity Hub -> Learn -> select microgame and download
+Note: special Unity version might be also required for using this project
+
+
+----------------------
+Actions
+--------------------
+
+****
+Prefabs
+**********
+1) Drad and drop John Lemon model into scene: Assets -> Models -> Charachters (instance of non editable prefab will be created)
+2) Drag and drop created game object into Assets -> Prefabs (your custom prefab will be created and it can be edited)
+
+*********
+John Animation
+*********
+Create walking animation:
+1) Create 'JohnLemon' Animator controller item in Assets -> Animation -> Animators
+2) Add 'IsWalking' bool parameter into animator parameters
+3) Drag and drop 'Wals' and 'Idle' animations to 'Base layer' from Assets -> Animation-> Animation
+4) Add transitions between these two animations:
+	-- disable 'Has Exit time' in them
+	-- add conditions with binding IsWalking variable
+5) Assign created animator to JohnLemon in Animator component
+6) Set Update Mode to 'Animate Physics' in Animator component to fix issue with model self movement
+
+**********
+John physics
+**********
+1) Open John's prefab and add Rigidbody component
+2) Freeze Y position (no need to move up or down)
+3) Freeze X and Z rotations (it can only rotate around Y)
+4) Add capsule collider: radius = 0.4, center Y: 0.7, Height: 1.4
+
+************
+Player movement
+**************
+1) Add 'PlayerMovement' script to Assets -> Scripts
+2) Write some code in it and attach script to John Lemon obj
+
+***********
+Lightening
+*************
+Select Directional light (global light) and set:
+- Set rotation (30 20 0)
+- Color (225 240 250)
+- Bias anf Normal bias to 0.01
+- Intensity 2  // means brithness strength
+- Resolution to Very High resolution
+
+Then set Global Illumination settings via Window -> Rendering -> Lighting
+- Uncheck 'Realtime' and 'Baked' Global Illuminate
+- go to Environment:
+	-- Set Sky to None
+	-- Set Source to Gradient
+	-- Set Sky color to (170 180 200)  // color which comes from Above
+	-- Set Equator color to (90 110 130) // color which comes from Horizon
+	-- Set Ground color to 0 0 0 		// color which comes from Bottom (ground)
+
+************
+Navigation (for enenmies)
+***************
+Open Window -> AI -> Navigation
+- in Bake tab set radius to 0.25 (because ghosts are smaller)
+- click Bake
+as result navigation area will be created and used by enemies for moving
+
+
+*************
+Camera
+***************
+1) Select John Lemon and press 'F'
+2) Cinemachine -> Create virtual camera
+	-- Set Aim to 'Do nothing'
+	-- Set Follow to John Lemon obj
+	-- Set Body to 'Framing Transposer' 
+	-- Set Rotation to 45 0 0
+	-- Set Camera Distance to 8
+
+Post-Processing Layer - special camera effects which can be triggered by some effects (e.g. brihtness after exiting from dark room to sunny area)
+- Select Main Camera and add 'PostProcessingVolumes' (to layer 8)
+- Add Post Process Layer component to Main Camera
+	-- Set layer to PostProcessingVolumes  
+
+--------------------------------
+Additional camera effects
+---------------------------
+- Create empty object with name GlobalPost
+- Set layer to 'PostProcessingVolumes'
+- Add a 'Post Process Volume' Component 
+	-- enable IsGlobal
+	-- click "New" on profile
+- Add effect 'Color granding'
+	-- Tonemapping: enable mode; select ACES //all becomes darker
+	-- Tone: Post-exposure (EV) to 1	// a bit brighter
+	-- Lift (color for shadows) to -0.06 0 0.17
+	-- Gain (affects highlights) 1.06 1 0.83
+	-- Gamma (covers everythin in the cammera middle) 1.05 1 0.88
+
+Bloom effect (add lighting to all bright object):
+- Add 'Bloom' effect
+- Enable all settings
+- Intencity to 2.5
+- Threshold to 0.75
+
+Ambient Occlusion Effect (shadows in all room corners)
+- Add 'Ambient Occlusion' effect
+- Enable all settings
+- Intencity to 0.5
+- Thickness Modifier property to 3.5
+
+Vignette Effect (to make darken the edges of the camera)
+- Add effect 'Vignette'
+- Enable all settings
+- Intencity to 0.5
+- Smoothness to 0.3
+
+Lens Distortion (make camera view convex)
+- Add effect 'Lens Distortion'
+- Enable all settings
+- Intencity to 35
+- Scale to 1.1 (to fix some glitches)
+
+**********
+Image quality
+**************
+Anti-aliasing - remove pixelization at the edges of charachter
+- Set Mode to FXAA in 'Post Process Layer' component of Main Camera
+- Set 'Fast Mode'
+
+*********
+User Interface
+*********
+1) Create UI -> Image (Canvas, Image and EventSystem will be created)
+2) Switch the Scene to 2D
+3) Select canvas and press 'F' (to focus and view it)
+4) Delete EventSystem
+5) Rename Canvas to 'FaderCanvas'
+	-- Render Mode 'Screen Space - Overlay' (UI fills the screen and is rendered on top of everything else)
+				   'Screen Space - Camera' (fills the screen but only for specific camera)
+				   'World Space' (UI rendered in the scene e.g. above some objects to show their names)
+	Set Render Mode to 'Screen Space - Overlay'
+	-- Remove 'Canvas Scaler' component (it's for relative scaling)
+	-- Remove 'Graphic Raycaster' (for managing User events: clicks and etc)
+7) Configure Image:
+	- turn of all efects in the scene
+	- Rect Transform:
+		-- Anchors set Min and Max for X/Y to 0 and 1
+		-- Set Left, Top, Right, Bottom to 0
+	- Set color RGB to 0
+	- Rename Image to 'ExitImageBackground'
+8) Add Image to ExitImageBackground and set name to ExitImage
+9) Configure ExitImage:
+	- Set 'Source Image' to 'Won'
+	- Rect Transform:
+		-- Anchors set Min and Max for X/Y to 0 and 1
+		-- Set Left, Top, Right, Bottom to 0
+	- 'Image Type': set 'Preserve Aspect' to true (removes squashing or stretching)
+10) Select 'ExitImageBackground' and add Canvas Group component
+	- Set Alpha to 0
+
+--------------
+Add trigger
+---------------
+1) Create empty obje and name it 'GameEnding'
+	- Transform to (18, 1, 1.5)
+2) Add 'Box Collider'
+	- Enable 'Is Trigger'
+3) Create 'GameEnding' script
+	- Drag it to 'GameEnding' gameobject
+	- Write necessary code
+	- Assign Public variables (JohnLemon and ExitImageBackground (unity will extract correct components from it))
+
+*****************
+Enemies
+******************
+Static observers
+1) Find Gargoyle in Assets -> Models -> Charachers and move to hierarchy
+2) Drag gargoyle game object to Assets -> Prefabs (select Original prefab)
+3) Enter Prefab edit mode
+4) Create Animation controller 'Gargoyle' in Assets -> Animation -> Animators
+	- Open Animator
+	- Drag Assets > Animation > Animations > Gargoyle@Idle into Animator window
+	- Drag this controller to Gargoyle gam object
+5) Add Capsule Collider to Gargoyle
+	- Change the Capsule Collider’s Center property to (0, 0.9, 0)
+	- Change the Radius property to 0.3
+	- Change the Height property to 1.8
+6) Create empty object for Gargoyle with name 'PointOfView':
+	- Change the Position property to (0, 1.4, 0.4) 
+	- Change the Rotation property to (20, 0, 0)
+7) Add Capsule Collider to 'PointOfView' (for light detector):
+	- Enable 'Is trigger'
+	- Change the Capsule Collider’s Center property to (0, 0, 0.95)
+	- Change the Radius property to 0.7
+	- Change the Height property to 2
+	- Change the Direction property from Y-Axis to Z-Axis
+8) Create script “Observer” in Assets > Scripts
+	- Assign it for 'PointOfView'
+	- Write some code
+9) Update GameEnding script (to restart level and show another canvas)
+10) Configure public variables
+11) Duplicate copy and paste ExitImageBackground inside FaderCanvas
+	- Rename to CaughtImageBackground
+	- Change the image:
+		-- rename to 'CaughtImage'
+		-- Set 'Source Image' to Caught
+	- Assign CaughtImageBackground to GameEnding
+
+------------------
+Dynamic enemies
+--------------------
+1) Find Ghost in Assets -> Models -> Charachers and move to hierarchy
+2) Drag ghost game object to Assets -> Prefabs (select Original prefab)
+3) Enter Prefab edit mode
+4) Create Animation controller 'Ghost' in Assets -> Animation -> Animators
+	- Open Animator
+	- Drag Assets > Animation > Animations > Ghost@Walk into Animator window
+	- Drag this controller to Ghost prefab
+5) Add a Capsule collider:
+	- Change the Capsule Collider’s Center property to (0, 0.6, 0)
+	- Change the Radius property to 0.25
+	- Change the Height property to 1.2
+6) Add Rigidbody component:
+	- Enable 'Is Kinematic' // kinematic body can not be affected by any external force
+7) Open Gargoyle Prefab, select PointOfView and move it into Prefabs
+8) Assign PointOfView Prefab to Ghost and edit it:
+	- Change the Position property to (0, 0.75, 0.4)
+	- Change the Rotation property to (0, 0, 0)
+
+Navigation part:
+1) Add 'Nav Mesh Agent' component to the Ghost 
+	- Radius to 0.25
+	- Speed to 1.5
+	- Stopping Distance to 0.2 // precision which Ghost will use to arrive some destination points
+2) Create script 'WaypointPatrol' in Assets > Scripts
+	- Assign it for 'Ghost'
+	- Write some code
+3) Assign 'Nav Mesh Agent' from ghost prefab to script variable
+4) Configure Ghost -> PointOfView gameobject public variables
+5) Adding waypoints:
+	- Create Empty 'Waypoint'
+	- Duplicate it 9 times 
+		-- Waypoint to Vector3(-5.3, 0, 6.7)
+		-- Waypoint (1) to Vector3(-5.5, 0, -4.5)
+		-- Waypoint (2) to Vector3(1.2, 0, 7.7)
+		-- Waypoint (3) to Vector3(0.9, 0, -3.5)
+		-- Waypoint (4) to Vector3(3.2, 0, 5.6)
+		-- Waypoint (5) to Vector3(3.2, 0, 12.3)
+		-- Waypoint (6) to Vector3(6.5, 0, 12.3)
+		-- Waypoint (7) to Vector3(6.5, 0, 5.6)
+		-- Waypoint (8) to Vector3(3.2, 0, -5)
+		-- Waypoint (9) to Vector3(7.4, 0, -2)
+
+Adding enemies:
+1) Copy paste Ghost gameobj by ctrl + D
+2) Set positions:
+	- Ghost to (-5.3, 0, -3.1)
+		WayPoints:
+		- Waypoint
+		- Waypoint (1)
+	- Ghost (1) to (1.5, 0, 4)
+		WayPoints:
+		- Waypoint (2)
+		- Waypoint (3)	
+	- Ghost (2) to (3.2, 0, 6.5)
+		WayPoints:
+		- Waypoint (4)
+		- Waypoint (5)	
+		- Waypoint (6)
+		- Waypoint (7)
+	- Ghost (3) to (7.4, 0, -3)
+		WayPoints:
+		- Waypoint (8)
+		- Waypoint (9)	
+3) Duplicate Gargoyle gameobject 2 times
+2) Set positions:
+	- Gargoyle (1)
+		-- Position Vector3(-2.6, 0, -8.5)
+		-- Rotation (0, 30, 0)
+	- Gargoyle (2)
+		-- Position Vector3(-4.8, 0, 10.6)
+Cleanup:
+1) Create empty object 'Enemies'
+	- Select all Gargoyles and Ghosts and move them into 'Enemies'
+2) Create 'Waypoints' and wrap all waypoints
+
+
+******************
+Audio
+*******************
+General: an Audio Source plays an Audio Clip, and if the Audio Listener is close enough to the Audio Source then the sound is heard
+spatial blend - determines loud strength on distance from sound source
+
+---------------
+Add non-diegetic sounds (i.e constant, w/o source)
+----------------------
+1) Create empty object 'Ambient'
+2) Drag to the object: Assets > Audio > SFXHouseAmbience
+	- Enable 'Loop'
+	- Set Spatial Blend to '2D' //means that it can be always listened by listener
+	- Set Volume to 0.5
+3) Make duplicates of 'Ambient': 'Escape' and 'Caught'
+	- Disable 'Play On Awake'
+	- Disable 'Loop'
+	- Volume to 1
+	- For Escape set SFXWin audio
+	- For Caught set SFXGameOver audio
+4) Create 'Audio' game obj and wrap all audio inside it
+5) Update 'GameEnding' script to play 'Win' and 'Gameover' audios
+6) Configure public variables for 'GameEnding' object
+
+-------------
+Add diegetic sounds (which have sources)
+------------------
+1) Add AudioSource to JohnLemon prefab: //this sound will have source but still non-diegetic as we set 2D
+	- Add SFXFootstepsLooping audioclip
+	- Disable the Play On Awake
+	- Spatial Blend to 2D
+	- Enable the Loop 
+2) Update PlayerMovement script
+
+3) Remove 'Audio Listener' from 'Main Camera'
+4) Add 'Audio Listener' to JohnLemon prefab
+5) Select JohnLemon gameObject -> Overrides (in Inspector window) and check differences with prefab, then apply the changes to prefab
+6) Assign SFXGhostMove Audio Clip to Ghost
+	- Enable the Loop property checkbox
+	- Set the Volume property to 0.4
+	- Set the Spatial Blend to 1, so that it is fully 3D
+	- 3D Sound Settings:
+		-- Max Distance property to 10 // max 'heardable' distance
+		-- Volume Rolloff to Custom Rolloff // the way how volume changes in dependance on distance
+		-- Spread property to 180 //half the sound will come from each channel, so the sound will be directionless
+
+**************
+Build and distribute
+*****************
+1) Go to Edit > Project Settings and select Player
+	- Product Name to  “John Lemon’s Haunted Jaunt”.
+	- Resolution and Presentation:
+		-- Uncheck 'Run in Background'
+	- Application Config Dialog Banner:
+		-- you can add Logo
+2) Go to File > Build Settings
+	- Click 'Add Open Scenes' to include main scene in build
+	(To add more platforms use UnityHub)
+3) Press 'Build'

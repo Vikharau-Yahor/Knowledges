@@ -1,0 +1,17 @@
+******************
+Hints
+********************
+- Loop animation:
+	- open animation object and set 'Loop time'
+
+
+**************
+Camera
+***************
+- Install package Cinemachine
+- Create virtual camera
+	-- Set Aim to POV
+	-- Set Follow to John Lemon obj
+	-- Set Body to 'Framing Transposer' 
+	-- Set Rotation to 45 0 0
+	-- Set Camera Distance to 8
