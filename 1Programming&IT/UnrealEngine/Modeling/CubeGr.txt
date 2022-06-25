@@ -1,0 +1,9 @@
+Modeling mode -> CubeGr
+
+*******
+Hotkeys
+*******
+1) Apply cub gr --- Enter
+2) Decrease/Increase height of selected area --- Q/E
+3) Enter angle mode -- select area -> Z (use Q/E to decrease increase angle)
+4) Decrease/Increase size of cub - Ctrl + Q/E

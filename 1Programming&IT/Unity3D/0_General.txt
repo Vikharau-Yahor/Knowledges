@@ -1,7 +1,7 @@
 *********
 Links
 ************
-1) unity manual - https://docs.unity3d.com/2021.1/Documentation/Manual/
+1) unity manual - https://docs.unity3d.com/2021.3/Documentation/Manual/
 2) unity learning - https://learn.unity.com/
 3) asset store - https://assetstore.unity.com/account/assets
 	(import assets can be done view Window -> Package Manager)

@@ -1,0 +1,10 @@
+************
+Initial setup
+**********
+1) Window -> Env. Light Mixer
+2) Check necessary light features (any except Light atmosphere 01)
+
+********
+Hotkeys
+************
+1) Manipulate sky direction -- Ctrl + L

@@ -1,0 +1,12 @@
+**********
+Moddeling mode
+**********
+Select mode -> Moddling mode
+or 
+Shift + 5
+
+*************
+Hotkeys
+**********
+1) Enable mode -- Shift + 5
+

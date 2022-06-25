@@ -1,0 +1,5 @@
+Quixel Bridge content
+******
+Get quixel content
+*******
+Cntrl + enter -> right click "Add Quixel content"
