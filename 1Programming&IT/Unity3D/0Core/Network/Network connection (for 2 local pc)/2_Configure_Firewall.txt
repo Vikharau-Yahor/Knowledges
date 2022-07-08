@@ -1,0 +1,35 @@
+Need to configure firewall on host machine to allow connections to some port
+
+What I did for Elders game:
+---Allow process----
+1) Control Panel -> System and Security -> Windows Defender Firewall -> Allowed apps
+2) Change settings
+3) Allow another app
+4) Browse -> find your game .exe (e.g. Elders.exe in build folder)
+5) Tick 'private' and 'public' -> add
+
+--- Allow port ----
+ref: https://docs.microsoft.com/en-us/sql/reporting-services/report-server/configure-a-firewall-for-report-server-access?view=sql-server-ver16
+1) Control Panel -> System and Security -> Windows Defender Firewall
+2) Advanced Settings -> Inbound Rules
+3) New rule
+	- select Port
+	- select TCP + specify host game port in 'specific local ports' (e.g. 7778)
+	- select 'Allow the connection'
+	- tick all (Domain, private, public)
+	- add some name (e.g. eldersTCP)
+4) add new rule with same params but specify UDP instead of TCP
+
+
+
+********************
+Useful PS commands for checking state of port
+********************
+--Check that port is listened
+	netstat -ano | findstr :7778
+
+--Check info about process returned from command above
+	tasklist | findstr 636
+
+--Test forwarded port (didn't work for me :( )
+	test-netconnection -computername localhost -port 7778

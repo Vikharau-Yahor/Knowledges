@@ -1,0 +1,46 @@
+*********
+RPC
+************
+RPC (Remote Procedure Call) -- means call of object method which will be performed on Client or Server
+- Client method must have: [ClientRpc] attribute and suffix in name "ClientRpc"
+- Server method must have: [ServerRpc] attribute and suffix in name "ServerRpc"
+	 -- The RPC will be placed in the local queue and then sent to the server
+
+General Notes:
+1) RPCs are executed in the same order as they fired within same NetworkObject. But it can be changed within RPC atribbute e.g.:
+	[ServerRpc(Delivery = RpcDelivery.Unreliable)]
+
+Host notes:
+1) avoid ServerRPC and ClientRpc methods calls each other -- StackOverflow :)
+2) In case of host: ServerRPC and ClientRPC will be invoked on host too but with small delay (because of local message queue)
+
+
+******************
+Samples of allowed methods
+*********************
+1) Server call
+
+	[ServerRpc]
+	void PongServerRpc()
+	{}
+
+2) Call to all Clients with params
+
+	[ClientRpc]
+	void PongClientRpc(int somenumber, string sometext)
+	{}
+
+3) Call to a certain client
+
+    ClientRpcParams clientRpcParams = new ClientRpcParams
+    {
+        Send = new ClientRpcSendParams
+        {
+        	TargetClientIds = new ulong[]{clientId}
+       	}
+    };
+    DoSomethingClientRPC(randomInteger, clientRpcParams);
+
+    [ClientRpc]
+    private void DoSomethingClientRPC(int randomInteger, ClientRpcParams clientRpcParams = default)
+    {.....}

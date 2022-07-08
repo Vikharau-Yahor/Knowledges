@@ -1,0 +1,18 @@
+Boss room
+- architecture: https://github.com/Unity-Technologies/com.unity.multiplayer.samples.coop/blob/main/ARCHITECTURE.md
+
+********
+Player
+******************
+Prefabs -> Charachter:
+1) PersistentPlayer - is spawned as player for clients; persist player data between scenes
+	- AvatarGuid - stores guid of prefab instance from Assets -> GameData -> Avatars (assigned on charachter selection)
+
+2) PlayerAvatar - player charachter:
+	- Network Charachter state (NetworkCharacterState) - all important network data, Server and Client rpcs
+	- ClientCharacter - display char on client based on Server info  
+		ClientCharacterVizualization
+	- NetworkHealthState - responsible for health
+	- NetworkLifeState - life status (e.g. alive, dead)
+	- CharacterClassContainer - player or npc char class
+		CharacterClass -- contains data about skills, hp, mana, char type

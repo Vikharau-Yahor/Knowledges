@@ -1,0 +1,43 @@
+******************
+General
+*******************
+Latest unity solution: NetCode for GameObjects (nuget package)
+- Latest version: 1.0.0
+- Supports: Unity 2020.3, 2021.1, 2021.2 and 2021.3
+- Documentation: https://docs-multiplayer.unity3d.com/netcode/current/about/index.html
+- Github: https://github.com/Unity-Technologies/com.unity.netcode.gameobjects
+- Boss room sample: https://github.com/Unity-Technologies/com.unity.multiplayer.samples.coop
+
+*******************
+Installation
+******************8
+- Instal package: NetCode for gameObjects
+	-- also install package with additional tools: com.unity.multiplayer.tools
+
+*********************************
+Termins
+*******************
+1) RPC (Remote Procedure Call ) -- is a call of a certain client object method which in fact will be performed on Server instance of an object
+
+*************************
+Main objects
+***********************
+-----------------------------------------------------------------------------------------
+-----NetworkManager--------------
+
+NetworkManager - main single object which allow to start server, client or host
+Props:
+- Player prefab -- automatically spawn this prefab for any client
+- Network prefabs -- 
+- Transport 
+	-- Unet Transport -- deprecated
+	-- Unity Transport -- default and latest
+
+--------------------------------------------------------------------------------------
+-----NetworkObject and NetworkBehaviour components --------------
+
+Both are required on the object in order to make it "network"-supported
+
+----------------------------------------------------------------------------------------------------
+----NetworkVariable-----------------
+Value of this variable is always sync between client and server

@@ -1,0 +1,15 @@
+Client requirements:
+- client PC must be in the same local network as host pc (or some relay must be used e.g. hamachi)
+- client and host should start game from the same build version
+
+
+Client steps
+0) host game is started on host pc
+1) open unity game on client PC
+2) Connect to host game using the following:
+
+	    var m_Transport = (UnityTransport) NetworkManager.Singleton.NetworkConfig.NetworkTransport;
+	    m_Transport.SetConnectionData(m_ConnectAddress, ushort.Parse(m_PortString));
+
+  -- m_ConnectAddress is address of host in local network (e.g. 192.168.1.15 )
+  -- m_PortString is port of host game (e.g. 7778)

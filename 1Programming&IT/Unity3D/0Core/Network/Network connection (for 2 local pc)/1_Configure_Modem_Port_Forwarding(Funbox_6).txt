@@ -1,0 +1,33 @@
+links:
+ 1st part https://www.youtube.com/watch?v=naQlMs5nHk8
+ 2nd part https://www.youtube.com/watch?v=wMuihTW16_w
+
+**********
+Configure ipv4 connection
+**********
+1) visit http://192.168.1.1/ and login
+2) Opcje -> Zaawansowanie
+3) polachanie z Internetam (in the left section)
+	- check Login Neostrady (it must not contain ipv6) e.g. must be test@neostrada.pl (my was already w/o ipv6)
+	- 'Wymuś połączenie IPv4' must be checked (my hasn't been checked)
+4) click Zapisz and wait for status 'Polaczony'
+
+*******
+Fixed ip address within internal network
+***********
+5) from step 4 -> konfiguracia sieci -> DHCP
+6) find table 'Statyczny adres IP' and add specify your PC there -> dodaj
+7) restart your modem
+8) check data
+
+************
+Port forwarding
+*********
+1) login to modem
+2) Opcje -> Zaawansowanie
+3) Nat/Pat
+4) in 'reguły użytkownika' add new rule:
+	-- 'aplikacja / usługa' - any name
+	-- port wewnętrzny - port of your internal app
+	-- port zewnętrzny - external port (can be same as internal)
+	-- urządzenie - name of PC who is allowed to use your port

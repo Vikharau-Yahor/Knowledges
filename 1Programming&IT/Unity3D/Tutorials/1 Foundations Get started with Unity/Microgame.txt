@@ -79,8 +79,9 @@ as result navigation area will be created and used by enemies for moving
 *************
 Camera
 ***************
-1) Select John Lemon and press 'F'
-2) Cinemachine -> Create virtual camera
+1) Select Main camera and add component 'Cinemachine Brain'
+2) Select John Lemon and press 'F'
+3) Cinemachine -> Create virtual camera
 	-- Set Aim to 'Do nothing'
 	-- Set Follow to John Lemon obj
 	-- Set Body to 'Framing Transposer' 

@@ -1,0 +1,28 @@
+**************
+General
+**************
+Terrain enables creation textured landscapes with grass and trees
+- Terrain object: Gameobject -> 3D -> Terrain
+
+
+**********
+Toolset (terrain gameobject -> Terrain component)
+1) Create neighbour terrain (create additional neighbor terrain to current)
+2) Paint terrain (landscapse shape + apply textures + grass/trees)
+	2.1) Raise or lower terrain
+		Enables changing shape of landscapse (e.g. mountains, fields, holes creation)
+	2.2) Paint Textures 
+		-- Create layer or layers with certain 2d texture
+		-- Use certain brush + layer to paint landscapes
+3) Paint trees
+	- Edit trees -> Add tree (select prefab of a tree)
+	- Use brush and selected tree to create trees
+4) Paint details (grass and other small details)
+	- Edit details -> select grass texture
+	- Use certain brush + grass to paint
+
+
+************
+Used assets
+************
+- Standard Assets (set of textures, trees and grass)

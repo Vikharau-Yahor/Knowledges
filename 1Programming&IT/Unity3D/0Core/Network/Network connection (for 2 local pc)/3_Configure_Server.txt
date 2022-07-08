@@ -1,0 +1,7 @@
+1) Open unity game
+2) Select NetworkManager obj -> Unity Transport
+	- Set Address: 0.0.0.0 (which mean all IP addresses which refer to your PC)
+	- Set Port (e.g. 7778 for Elders)
+	- (leave Listening address empty)
+3) start host (or server) using:
+	NetworkManager.Singleton.StartHost();

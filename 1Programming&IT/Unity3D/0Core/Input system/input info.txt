@@ -1,0 +1,27 @@
+https://docs.unity3d.com/Manual/com.unity.inputsystem.html
+
+**********
+Quick info (06/2021)
+**********
+Unity's build in Input manager is deprecated(Edit -> Project settings -> Input manager)
+
+Latest input mechanic is 'Input sytem' (distributed as separate package)
+
+
+************
+Setup Flow
+**************
+1) Install package
+2) Edit -> Projects settings -> Input system -> create settings
+3) Select your Player game obj and add 'Player Input' component
+4) Click 'Create actions' (it will generate base set of inputs)
+5) Check Behavior property of 'Player Input' component -- it defines how this component will notify other components when some Input is used/pressed
+	- Send Messages	-- Uses GameObject.SendMessage on the GameObject that the PlayerInput component belongs to.
+	- Broadcast messages -- same as above but messages are also sent to child objects
+	- ...other types are event-based
+6) In case of 'Send Messages' you can create additional script which would handle input actions:
+	- add script component on the same object like Player input
+	- define message handle methods like:
+		//you can make it parameterless
+		public void OnMove(InputValue value)
+	- check some samples in 3D third person template unity project
