@@ -1,0 +1,83 @@
+Survival engine:
+To do:
+1) Determine how important data is sycnrhonized client/server (e.g. player and animal HP)
+2) Determine how animations are sync (e.g. animal attack, player attack, hit processing)
+3) Position/Rotation/Move sync
+
+Answers:
+1) player HP,Exp,Level is synced by Server by timer (PlayerCharacterAttribute.Update -> CheckRefresh())
+2) Attack animation for NPCs is triggered by action by both Server->Clients and Client -> server. But actually only Sever->Clients event will be processed (server will skip this event from clients)
+3) Position/Rotation/MoveVector of NPCs and player are synced using CharacterState (contains necessary data) which is published by Charachter.SyncServer() on server and consumed in Charachter.SyncNotServer() clients
+4) HP of npc -- is not sync. Clients and servers calculate hp damage on their own BUT only Server will trigger Death
+
+---------------------------------
+Damage from NPC applying + attack animation
+------------------------------
+
+- Attack hit by NPC (works for Server/Client)
+Charachter.cs
+-> Update()
+	//Animation
+	-> UpdateAttacking()
+		-> actions.Trigger(ActionType.Attack) // Action registered on both server/Client with target = NetworkActionTarget.All
+			//Triggering
+			-> naction.TriggerAction(this);
+			-> SendToTarget(handler, data);
+				// in case of client
+				-> handler.SendActionServer(type, data, delivery);
+					-> Messaging.SendBuffer("action", target, writer, delivery);
+
+				//in case of server
+				-> handler.SendActionClients(type, data, delivery);
+					-> Messaging.SendBufferAll("action", writer, delivery);
+
+
+			//Trigger consuming (Server/Client)
+			NetworkGame.Start
+			-> Messaging.ListenMsg("action", ReceiveAction);
+			-> ReceiveAction
+			-> NetworkActionHandler handler = NetworkActionHandler.GetHandler(object_id, behaviour_id);
+            	handler?.ReceiveAction(client_id, type, reader, (NetworkDelivery) delivery);
+            -> ...
+	            if (..action.HasAuthority(netbehaviour, client_id))
+	            {
+	                action.RunAction(reader);
+	                ..
+	            }
+
+	         //On Server
+	         .. no execution
+
+	         //On client   	
+			-> DoStartAttack()
+			-> onAttack.Invoke() //AnimalWild
+			-> AnimalWild.OnAttack()
+			-> animator.SetTrigger("Attack");
+	//Hit
+	-> DoAttackStrike
+		//AttackTarget is Desctructible for NPC and PlayerCharacterCombat for players
+
+		// NPC flow
+		-> attack_target.TakeDamage(this, attack_damage); 
+			-> ApplyDamage(damage);
+				->  hp -= adamage;
+			-> onDamagedByCharacter?.Invoke(attacker);
+		// Player flow
+		-> attack_target.TakeDamage(this, attack_damage); 
+		->  character_attr.AddAttribute(AttributeType.Health, -dam);
+
+
+
+----------
+Network importnant classes
+----------------
+[Server/Client]
+1) NetworkGame -- registers handlers for NetworkMessaging events
+	-> Start()
+		Messaging.ListenMsg("action", ReceiveAction);
+        Messaging.ListenMsg("spawn", ReceiveSpawnList);
+        Messaging.ListenMsg("despawn", ReceiveDespawnList);
+    -> Messaging
+    	-> TheNetwork.Get().Messaging //NetworkMessaging
+
+2) NetworkMessaging

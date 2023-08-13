@@ -1,0 +1,4 @@
+ScriptableObject -- a data container that you can use to save large amounts of data, independent of class instances
+
+Properties:
+- multiple references from different object will lead to SINGLE instance of scriptableObject

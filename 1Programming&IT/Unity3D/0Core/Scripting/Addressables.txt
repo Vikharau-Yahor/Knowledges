@@ -1,0 +1,45 @@
+Link: https://docs.unity3d.com/Packages/com.unity.addressables@1.19/manual/index.html
+Usage samples: github.com/Unity-Technologies/Addressables-Sample
+Package: Addressables
+
+
+***********
+Setup flow
+*************
+1) Install package: Addressables
+2) Window -> Asset Management -> Addressables -> Groups -> Create Addressables settings
+
+****************
+Build addressable flow
+*****************
+Setup part:
+1) Window -> Asset Management -> Addressables -> Groups -> Settings
+2) Change 'Build addressables on Player build' if you need to include assets build in simple build process
+	- by default this option use value from 'Edit -> Preferences -> Addressables'
+
+**********
+Add addressable flow
+************
+1) Create addressables group
+2) Add asset to group 
+(you will see in inspector that the asset is marked as addressable)
+3) Load asset runtime by
+	- String address
+	- Label (for group of assets)
+	- AddressReference (direct link)
+
+
+*************
+Main parts
+*************
+- Groups 
+	-- stores various assets
+	-- determines how assets should be build (pathes, bundling mode and etc)
+
+- AssetReference -- means reference to an asset which you can use to load asset (prefab and etc)
+	private AssetReferenceGameObject prefabRef;
+	prefabRef.LoadAssetAsync(); //LoadAssetAsync<GameObject>().Completed += OnAssetLoad;
+	if (prefabRef.Asset)
+		Instantiate(prefabRef.Asset, position, Quaternion.identity) as GameObject;
+
+	prefabRef.ReleaseAsset();

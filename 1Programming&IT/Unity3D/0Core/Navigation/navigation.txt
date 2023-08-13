@@ -1,0 +1,32 @@
+******
+Main terms
+**********
+NavMesh - is walkable surface
+Agent - npc or other object that tends to move within navMesh
+
+
+*********
+Build NavMesh
+**************
+ref: https://docs.unity3d.com/Manual/nav-BuildingNavMesh.html
+
+0. Window > AI > Navigation
+1. Select scene geometry that should affect the navigation – walkable surfaces and obstacles.
+2. Check Navigation Static on to include selected objects in the NavMesh baking process.
+3. Adjust the bake settings to match your agent size.
+	- Agent Radius defines how close the agent center can get to a wall or a ledge.
+	- Agent Height defines how low the spaces are that the agent can reach.
+	- Max Slope defines how steep the ramps are that the agent walk up.
+	- Step Height defines how high obstructions are that the agent can step on.
+4. Click bake to build the NavMesh.
+As results NavMesh asset will be created in Scenes
+
+**********
+Create NavMeshAgent
+************
+ref: https://docs.unity3d.com/Manual/nav-CreateNavMeshAgent.html
+
+The NavMesh Agent component handles both the pathfinding and the movement control of a character
+
+1) Select your NPC object
+2) Component > Navigation > NavMesh Agent

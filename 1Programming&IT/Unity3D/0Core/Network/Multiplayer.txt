@@ -38,6 +38,9 @@ Props:
 
 Both are required on the object in order to make it "network"-supported
 
+NetworkObject:
+- Spawn() -- spawns object across network (spawn flow: create object via Instantiate(prefab) and then invoke Spawn from NetworkObject component)
+
 ----------------------------------------------------------------------------------------------------
 ----NetworkVariable-----------------
 Value of this variable is always sync between client and server

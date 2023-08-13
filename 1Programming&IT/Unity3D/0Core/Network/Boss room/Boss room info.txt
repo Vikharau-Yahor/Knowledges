@@ -16,3 +16,6 @@ Prefabs -> Charachter:
 	- NetworkLifeState - life status (e.g. alive, dead)
 	- CharacterClassContainer - player or npc char class
 		CharacterClass -- contains data about skills, hp, mana, char type
+
+	- ServerCharacter - setup default state, clients input handlers
+	- ServerCharacterMovement - charachter movement on server in reflection to inputs

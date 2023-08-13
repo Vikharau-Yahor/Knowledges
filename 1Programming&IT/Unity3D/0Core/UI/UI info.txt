@@ -1,0 +1,42 @@
+
+Latest approach is "UI Toolkit" 
+- documentation https://docs.unity3d.com/Manual/UIElements.html
+- Some sample (see code on the bottom of page): https://docs.unity3d.com/Manual/UIE-HowTo-CreateRuntimeUI.html
+****************
+Components
+***************
+VisualTreeAsset (main object, represents *.uxml asset)
+- Instantiate() - create UI element instance from an asset object;
+
+***********
+Main flow:
+1) Open Window -> UI toolkit -> UI builder or open existing uxml
+2) Create UI using controls from Library with setting up necessary properties/styles
+3) Save uxml to necessary location
+4) Create panel using 'Create > UI Toolkit > Panel Settings Asset' in Assets (you can leave default properties there)
+5) Create new GameObject with UIDocument component
+	- assign panel and your uxml assets in appropriate properties
+    - add uiinputsystem component to support inputs from newest 'input system'
+6) Create monobehaviour script e.g. 'View.cs' (optionally you can add simple class 'ViewController.cs' to make all bindings, initialization and other View logic)
+
+public class View : MonoBehaviour
+{
+
+    void OnEnable()
+    {
+        var uiDocument = GetComponent<UIDocument>();
+
+        // Initialize the controller
+        var viewController = new ViewController();
+        viewController.Initialize(uiDocument.rootVisualElement);
+    }
+}
+
+public class ViewController
+{
+    public void Initialize(VisualElement root)
+    {
+    }
+}
+
+7) Add 'View.cs' script as a component to menu GameObject

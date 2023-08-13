@@ -1,0 +1,3 @@
+Prefabs - this is snapshot of the scene object (with all necessary components and their configuration) which is used to scene object creation by cloning this snapshot in runtime or in editor:
+- Creation in runtime -- call Instantiate(objRef, position, rotation) - to create in runtime
+- Changes reflection -- you can reflect prefab changes in all its instances within scene
