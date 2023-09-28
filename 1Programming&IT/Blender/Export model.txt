@@ -1,0 +1,6 @@
+1) File -> Export -> FBX
+2) Path mode: Copy 
+	-- also check 'Embed textures' button (right near Copy input)
+3) Limit to: Selected objects
+4) Check necessary options in Object types (e.g. all except lamp/camera)
+5) Export

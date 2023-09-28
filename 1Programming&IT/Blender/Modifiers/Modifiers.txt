@@ -1,0 +1,1 @@
+1) Decimate - turns High Poly object to low poly (changing Ratio towards 0 makes your object more low poly)

@@ -1,0 +1,14 @@
+Texture maps:
+- Color map (can be named as color, albedo, base color or diffuse) -- main image which represents in set of colors which your model will have
+- Displacement map
+- Roughness map 
+- Normal map -- controls bumps. Normal map node must exist between Image texture with normal map and Shader node.
+	-- NormalGL -- Blender's Eeeve/cycles work with this better
+	-- NormalDX
+- Metallic -- what part is more/less metall (white means more metallic)
+- Opacity -- connects to Alpha node, determinse what parts of texture will/won't be rendered
+- Emission map -- controls which part of texture emit light + color of light
+
+
+Notes: 
+1) all map texture nodes which doesn't affect color must have Color space: 'Non-color' (e.g. metallic, Normal, )

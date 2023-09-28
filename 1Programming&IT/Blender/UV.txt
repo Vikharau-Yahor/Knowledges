@@ -1,0 +1,7 @@
+UV
+
+Actions:
+1) Mark seem -- mark some edges to control how Unwrap action will do unwraping
+
+Tips:
+1) Make sure that you applied current object Scale to it's default scale (1,1,1) so you can see actual faces size on UV

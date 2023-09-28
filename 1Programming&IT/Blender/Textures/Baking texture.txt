@@ -1,0 +1,19 @@
+Go to Shading tab
+1) Add image texture node (or select existing for rewriting)
+-- Create image for node if it doesn't exists
+2) Select object to bake in scene
+3) On right panel -> select Render panel
+	-- select Cycles engine
+	-- Device: GPU
+	-- Set Bake options:
+		--- Bake type: Diffuse (to avoid any lights/ shadows and etc baking)
+		--- Target: image texture
+4) Click Bake (result texture will be written into image in selected 'image texture' node)
+
+
+Normal baking:
+	-- Bake type: Normal
+	-- Image node: non-color
+Roughness baking:
+	-- Bake type: Roughness
+	-- Image node: non-color

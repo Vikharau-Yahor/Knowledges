@@ -1,0 +1,14 @@
+Particle System -- gameobject component, enables emitting particle in certain way to simulate effects (fire, smoke and etc)
+
+Important settings:
+1) Main section:
+	-- Start lifetime 			-- particle will disappear after some time, controls distance of particle (also affected by start speed)
+	-- Start speed 				-- controls how fast is particle, affects particle distance (also affected by start lifetime)
+2) Emission 					-- if checked, particles will be emitted from object
+	-- Rate over time 			-- controls spawn rate of particles
+3) Shape						-- controls direction of emitted particles
+4) Size over lifetime			-- floatly change size of particles over time
+	-- size 					-- controls how size is changed over time, can be edited in separate window (right-bottom)
+5) Renderer						-- texture of emitter, controls how particle looks like
+	-- Render mode				-- controls how to display rendered particle
+	-- Material					-- material of particle (texture + shader effects)

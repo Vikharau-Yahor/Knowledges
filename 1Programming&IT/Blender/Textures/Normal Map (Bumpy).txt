@@ -1,0 +1,35 @@
+Normal map controls how bumpy i.e. height for some parts of your texture.
+Normal map can be connected directly with BSDF if you have special Blue-like image which contains normal map data
+
+*********
+Paint Setup
+****************
+Normal map can be painted and result can be baked to Normal texture
+1) Create three nodes: Image texture --> Bumpy Map -> Principled BSDF
+2) Setup Image texture:
+	- 32 bit (for increasing quality, otherwise it can be pixelated)
+	- set resolution which is x * 512
+	- Color space to Non-color
+	- set base color to the position RGB (0.5,0.5,0.5) which in the middle between black and white (darker value -- texture poping out, whiter -- going in, so)
+	- Interpolation to Cubic (recommendation)
+3) Connect 'Image texture' color with Height socket of 'Bumpy Map'
+4) Connect Normal sockets between Bumpy node and Shader
+
+*************
+Texture paint
+**************
+Use Mix brush with color values between Black-White:
+1) 'Bolts', dots paint --> Stroke: Anchored
+2) Stroke: Line
+3) Paint with texture
+	- Tools section (on right panel) -> Brush settings -> Texture
+	- Add new texture
+	- Change Type to some precedural texture
+
+Notes:
+1) Set brush force under 0.02 (or even 0.002) if you wish to make smth slitely bumpy
+
+********
+Baking
+***********
+See 'Baking texture.txt'

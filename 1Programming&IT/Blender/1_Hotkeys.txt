@@ -1,0 +1,18 @@
+******
+Essentials
+*************
+1) Shift + D 	-- Copy selected object
+2) G  			-- Move selected object/vercity
+3) Ctrl + A		-- Apply current scale,rotation and etc as default to the object
+
+***********
+Paint mode
+************
+1) F 		  -- Brush size
+2) Shift + F  -- Strength
+3) X 		  -- Switch between 2 colors
+
+*************
+UV
+***************
+1) V 		-- Extract selected faces to separate island

@@ -1,0 +1,22 @@
+****************
+Euler angle
+****************
+Euler angle is a Vector3 which reprezent x,y,z rotation of the object.
+Don't try to manipulate x,y,z directly as changing of this values leads to unexpected transform rotation changes
+Need to use Quaternion types for object rotations, euler can be used only for input params.
+
+Facts:
+- Inpsector rotation is not Euler angle.
+- rotation by x and z will cause unexpected results as it doesn't rotate relative world axises
+- only rotation by Y will lead to expected result.
+
+
+
+***********
+Quaternion
+***********
+Best solution for object rotation changes. Don't try to manually change some params inside, use methods:
+- RotateTowards -- rotates RotationA to RotationB by N degrees
+	var rotationDelta = _movementState.RotationSpeedDegrees * Time.deltaTime;
+	Quaternion.RotateTowards(currentRotation, targetRotation, rotationDelta)
+
